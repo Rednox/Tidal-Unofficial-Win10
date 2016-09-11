@@ -23,6 +23,8 @@ namespace Tidal {
 		concurrency::task<Windows::UI::Xaml::Data::LoadMoreItemsResult> LoadMoreItemsAsync(unsigned int count, concurrency::cancellation_token cancelToken);
 	internal:
 		IncrementalLoadingCollection(const LoadMoreCallback& callback);
+
+		//IncrementalLoadingCollection(const LoadMoreCallbackWithHat& callback);
 		concurrency::task<void> waitForNextLoadAsync() {
 			concurrency::task_completion_event<void> tce;
 			_nextLoadTces.push_back(tce);

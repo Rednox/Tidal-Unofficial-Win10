@@ -4,6 +4,7 @@
 //
 
 #include "pch.h"
+#include "XboxOneHub.h"
 #include "MainPage.xaml.h"
 #include "Shell.xaml.h"
 #include "AudioService.h"
@@ -11,6 +12,8 @@
 #include <localdata/db.h>
 #include "FavoritesService.h"
 #include "AuthenticationVisualStateTrigger.h"
+#include "XboxUI/XboxShell.xaml.h"
+#include <Environment.h>
 using namespace Tidal;
 
 using namespace Platform;
@@ -34,8 +37,13 @@ using namespace Windows::UI::Xaml::Navigation;
 App::App()
 {
 	InitializeComponent();
+	if (env::isRunningOnXbox()) {
+		RequiresPointerMode = Windows::UI::Xaml::ApplicationRequiresPointerMode::WhenRequested;
+	}
 	Suspending += ref new SuspendingEventHandler(this, &App::OnSuspending);
 	Resuming += ref new Windows::Foundation::EventHandler<Platform::Object ^>(this, &Tidal::App::OnResuming);
+	EnteredBackground += ref new Windows::UI::Xaml::EnteredBackgroundEventHandler(this, &Tidal::App::OnEnteredBackground);
+	LeavingBackground += ref new Windows::UI::Xaml::LeavingBackgroundEventHandler(this, &Tidal::App::OnLeavingBackground);
 }
 
 /// <summary>
@@ -48,7 +56,7 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 	if (_smtcService) {
 		return;
 	}
-	_smtcService = std::make_unique<SmtcService>(Windows::UI::Core::CoreWindow::GetForCurrentThread()->Dispatcher);
+	
 	Windows::Graphics::Display::DisplayInformation::AutoRotationPreferences = Windows::Graphics::Display::DisplayOrientations::Landscape
 		| Windows::Graphics::Display::DisplayOrientations::LandscapeFlipped
 		| Windows::Graphics::Display::DisplayOrientations::Portrait
@@ -69,8 +77,20 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 		catch (...) {}
 	});
 
-	localdata::initializeDbAsync().then([e]() {
+	localdata::initializeDbAsync().then([this,e]() {
+		_smtcService = std::make_unique<SmtcService>(Windows::UI::Core::CoreWindow::GetForCurrentThread()->Dispatcher);
 		getAudioService().wakeupDownloaderAsync(concurrency::cancellation_token::none());
+
+		if (env::isRunningOnXbox()) {
+			if (Window::Current->Content != nullptr) {
+				return;
+			}
+			auto xbshell = ref new XboxShell();
+			Window::Current->Content = xbshell;
+			Window::Current->Activate();
+			return;
+		}
+
 		auto rootFrame = dynamic_cast<Shell^>(Window::Current->Content);
 
 		// Do not repeat app initialization when the Window already has content,
@@ -79,7 +99,7 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 		{
 			// Create a Frame to act as the navigation context and associate it with
 			// a SuspensionManager key
-			rootFrame = ref new Shell();
+			rootFrame = ref new Shell(nullptr, _persistedState);
 
 
 			if (e->PreviousExecutionState == ApplicationExecutionState::Terminated)
@@ -105,6 +125,14 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 			}
 			// Ensure the current window is active
 			Window::Current->Activate();
+			_backMouseToken = Window::Current->CoreWindow->PointerPressed += ref new Windows::Foundation::TypedEventHandler<Windows::UI::Core::CoreWindow ^, Windows::UI::Core::PointerEventArgs ^>([](Windows::UI::Core::CoreWindow ^, Windows::UI::Core::PointerEventArgs ^ args) {
+				if (args->CurrentPoint->Properties->IsXButton1Pressed) {
+					auto frame = dynamic_cast<Shell^>(Window::Current->Content)->Frame;
+					if (frame->CanGoBack) {
+						frame->GoBack();
+					}
+				}
+			});
 		}
 	}, concurrency::task_continuation_context::get_current_winrt_context());
 }
@@ -153,4 +181,32 @@ void Tidal::App::OnResuming(Platform::Object ^sender, Platform::Object ^args)
 	});
 	getAudioService().onResuming();
 	getAppResumingMediator().raise(true);
+}
+
+
+void Tidal::App::OnEnteredBackground(Platform::Object^ sender, Windows::ApplicationModel::EnteredBackgroundEventArgs^ e)
+{
+	auto shell = dynamic_cast<Shell^>(Window::Current->Content);
+	if (shell) {
+		_persistedState = shell->SavePageStateForBackground();
+		_navState = shell->Frame->GetNavigationState();
+	}
+	Window::Current->Content = nullptr;
+}
+
+
+void Tidal::App::OnLeavingBackground(Platform::Object^ sender, Windows::ApplicationModel::LeavingBackgroundEventArgs^ e)
+{
+	if (env::isRunningOnXbox()) {
+		if (Window::Current->Content != nullptr) {
+			return;
+		}
+		auto xbshell = ref new XboxShell();
+		Window::Current->Content = xbshell;
+		Window::Current->Activate();
+	}
+	else {
+		auto shell = ref new Shell(_navState, _persistedState);
+		Window::Current->Content = shell;
+	}
 }

@@ -61,6 +61,10 @@
     <ClCompile Include="Api\FavoriteQueries.cpp" />
     <ClCompile Include="ObfuscateStream.cpp" />
     <ClCompile Include="Api\PlaylistsQueries.cpp" />
+    <ClCompile Include="LocalFileManager.cpp" />
+    <ClCompile Include="Api\PlaybackReport.cpp" />
+    <ClCompile Include="localdata\InsertPlaybackReportQuery.cpp" />
+    <ClCompile Include="Environment.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -129,5 +133,10 @@
     <ClInclude Include="Api\FavoriteQueries.h" />
     <ClInclude Include="ObfuscateStream.h" />
     <ClInclude Include="Api\PlaylistsQueries.h" />
+    <ClInclude Include="LocalFileManager.h" />
+    <ClInclude Include="pplawait2.h" />
+    <ClInclude Include="Api\PlaybackReport.h" />
+    <ClInclude Include="localdata\InsertPlaybackReportQuery.h" />
+    <ClInclude Include="Environment.h" />
   </ItemGroup>
 </Project>

@@ -7,12 +7,21 @@
 #include "Shell.xaml.h"
 #include "ArtistPage.xaml.h"
 #include <Api/CoverCache.h>
+#include <XboxUI/XboxShell.xaml.h>
+#include <XboxUI/XboxAlbumPage.xaml.h>
+#include <XboxUI/XboxArtistPage.xaml.h>
 
 void Tidal::AlbumResumeItemVM::Go()
 {
 	auto shell = dynamic_cast<Shell^>(Windows::UI::Xaml::Window::Current->Content);
 	if (shell) {
 		shell->Frame->Navigate(AlbumPage::typeid, Id.ToString());
+	}
+	else {
+		auto xbshell = dynamic_cast<XboxShell^>(Windows::UI::Xaml::Window::Current->Content);
+		if (xbshell) {
+			xbshell->Frame->Navigate(XboxAlbumPage::typeid, Id.ToString());
+		}
 	}
 }
 
@@ -22,10 +31,17 @@ void Tidal::AlbumResumeItemVM::GoToArtist()
 	if (shell && ArtistId != 0) {
 		shell->Frame->Navigate(ArtistPage::typeid, ArtistId);
 	}
+	else {
+		auto xbshell = dynamic_cast<XboxShell^>(Windows::UI::Xaml::Window::Current->Content);
+		if (xbshell) {
+			xbshell->Frame->Navigate(XboxArtistPage::typeid, ArtistId);
+		}
+	}
 }
 
 Tidal::AlbumResumeItemVM::AlbumResumeItemVM(const api::AlbumResume & info, bool offline)
 {
+	_albumInfo = info;
 	ArtistId = info.artist.id;
 	Id = info.id;
 	if (!offline) {

@@ -12,7 +12,6 @@
 #include "LoadingView.h"
 #include "PlaylistResumeItemVM.h"
 #include <Api/GetPlaylistTracksQuery.h>
-
 using namespace Tidal;
 
 using namespace Platform;
@@ -33,9 +32,9 @@ concurrency::task<void> Tidal::AddToPlaylistDialog::loadPlaylistsAsync()
 	loadingView->LoadingState = LoadingState::Loading;
 	try {
 		auto& authState = getAuthenticationService().authenticationState();
-		api::GetMyPlaylistsQuery query(authState.userId(), authState.sessionId(), authState.countryCode());
+		auto query = api::GetMyPlaylistsQuery::Make(authState.userId(), authState.sessionId(), authState.countryCode());
 
-		auto playlists = await query.executeAsync(concurrency::cancellation_token::none());
+		auto playlists = co_await query->executeAsync(concurrency::cancellation_token::none());
 		auto playlistSrc = ref new Platform::Collections::Vector<PlaylistResumeItemVM^>();
 		for (auto&& pl : playlists->items) {
 			auto item = ref new PlaylistResumeItemVM(pl);
@@ -50,16 +49,16 @@ concurrency::task<void> Tidal::AddToPlaylistDialog::loadPlaylistsAsync()
 	}
 }
 
-concurrency::task<void> Tidal::AddToPlaylistDialog::addToExistingPlaylistAsync(PlaylistResumeItemVM ^ playlist)
+concurrency::task<void> Tidal::AddToPlaylistDialog::addToExistingPlaylistAsync(PlaylistResumeItemVM^ playlist)
 {
 	loadingView->LoadingState = LoadingState::Loading;
 	try {
 		auto& authState = getAuthenticationService().authenticationState();
 		api::GetPlaylistTracksQuery existingTracksQuery(tools::strings::toStdString(playlist->Uuid), 0, 0, authState.sessionId(), authState.countryCode());
-		auto tracksResult = await existingTracksQuery.executeAsync(concurrency::cancellation_token::none());
+		auto tracksResult = co_await existingTracksQuery.executeAsync(concurrency::cancellation_token::none());
 		api::AddTracksToPlaylistQuery query(tools::strings::toStdString( playlist->Uuid), tools::strings::toWindowsString(tracksResult->etag),  authState.sessionId(), authState.countryCode(), _trackIds, playlist->NumberOfTracks);
 
-		await query.executeAsync(concurrency::cancellation_token::none());
+		co_await query.executeAsync(concurrency::cancellation_token::none());
 
 		loadingView->LoadingState = LoadingState::Loaded;
 		this->Hide();
@@ -75,12 +74,12 @@ concurrency::task<void> Tidal::AddToPlaylistDialog::addToNewPlaylistAsync()
 	try {
 		auto& authState = getAuthenticationService().authenticationState();
 		api::CreatePlaylistQuery createQuery(authState.userId(), authState.sessionId(), authState.countryCode(), txtTitle->Text, txtDesctiption->Text);
-		auto playlist = await createQuery.executeAsync(concurrency::cancellation_token::none());
+		auto playlist = co_await createQuery.executeAsync(concurrency::cancellation_token::none());
 		api::GetPlaylistTracksQuery existingTracksQuery(playlist->uuid, 0, 0, authState.sessionId(), authState.countryCode());
-		auto tracksResult = await existingTracksQuery.executeAsync(concurrency::cancellation_token::none());
+		auto tracksResult = co_await existingTracksQuery.executeAsync(concurrency::cancellation_token::none());
 		api::AddTracksToPlaylistQuery query(playlist->uuid, tools::strings::toWindowsString(tracksResult->etag), authState.sessionId(), authState.countryCode(), _trackIds, 0);
 
-		await query.executeAsync(concurrency::cancellation_token::none());
+		co_await query.executeAsync(concurrency::cancellation_token::none());
 
 		loadingView->LoadingState = LoadingState::Loaded;
 		this->Hide();

@@ -14,7 +14,7 @@ Tidal::IncrementalLoadingCollection^ getNewsPlaylistsDataSource(Platform::String
 concurrency::task<Platform::Collections::Vector<Tidal::TrackItemVM^>^> getNewsTrackItemsAsync(concurrency::cancellation_token cancelToken, Platform::String^ list = L"featured", Platform::String^ group = L"new");
 concurrency::task<std::shared_ptr<std::vector<api::SublistInfo>>> getSublistsAsync(concurrency::cancellation_token cancelToken, Platform::String^ list = L"featured");
 
-concurrency::task<Windows::UI::Xaml::Data::ICollectionView^> searchAllAsync(Platform::String^ query, concurrency::cancellation_token cancelToken);
+concurrency::task<Windows::UI::Xaml::Data::ICollectionView^> searchAllAsync(Platform::String^, concurrency::cancellation_token cancelToken);
 Tidal::IncrementalLoadingCollection^ getFilteredSearchSource(Platform::String^ query, Platform::String^ filter);
 
 Tidal::IncrementalLoadingCollection^ getLocalAlbumsDataSource();

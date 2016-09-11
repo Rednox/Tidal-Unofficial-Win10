@@ -13,6 +13,7 @@
 #include <tools/StringUtils.h>
 #include "Shell.xaml.h"
 #include "AccountPage.xaml.h"
+#include "XboxUI\XboxShell.xaml.h"
 using namespace Tidal;
 
 using namespace Platform;
@@ -81,7 +82,7 @@ void Tidal::LoginView::UpdateForAuthenticationState(const AuthenticationState & 
 concurrency::task<void> Tidal::LoginView::loginAsync()
 {
 	auto dialog = ref new LoginDialog();
-	await dialog->ShowAsync();
+	co_await dialog->ShowAsync();
 	if (dialog->DialogResult == LoginDialogResult::FacebookLoginRequested) {
 		auto flyout = ref new FacebookLoginFlyout();
 		flyout->ShowAt(dynamic_cast<FrameworkElement^>(Window::Current->Content));
@@ -102,6 +103,28 @@ void Tidal::LoginView::OnViewTapped(Platform::Object^ sender, Windows::UI::Xaml:
 		auto shell = dynamic_cast<Tidal::Shell^>(Window::Current->Content);
 		if (shell) {
 			shell->Frame->Navigate(AccountPage::typeid);
+		}
+		else {
+			auto xbShell = dynamic_cast<Tidal::XboxShell^>(Window::Current->Content);
+			if (xbShell) {
+				xbShell->Frame->Navigate(AccountPage::typeid);
+			}
+
+		}
+	}
+}
+
+void Tidal::LoginView::OnKeyDown(Platform::Object ^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs ^ e)
+{
+	auto k = e->Key;
+	if (k == Windows::System::VirtualKey::GamepadA || k == Windows::System::VirtualKey::Space || k == Windows::System::VirtualKey::Enter) {
+		e->Handled = true;
+
+		if (!getAuthenticationService().authenticationState().isAuthenticated()) {
+		OnViewTapped(sender, nullptr);
+		}
+		else {
+			loginAsync();
 		}
 	}
 }

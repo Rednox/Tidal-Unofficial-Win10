@@ -7,8 +7,8 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.10586.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.14393.0</WindowsTargetPlatformMinVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -81,40 +81,52 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UAP.2015, Version=3.9.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UAP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UAP.2015, Version=3.9.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UAP.2015.props')" />
     <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10586.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10586.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.12.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.12.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.14.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.14.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props')" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UAP.2015, Version=3.9.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UAP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UAP.2015, Version=3.9.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UAP.2015.props')" />
     <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10586.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10586.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.12.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.12.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.14.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.14.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props')" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UAP.2015, Version=3.9.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UAP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UAP.2015, Version=3.9.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UAP.2015.props')" />
     <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10586.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10586.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.12.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.12.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.14.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.14.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props')" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UAP.2015, Version=3.9.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UAP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UAP.2015, Version=3.9.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UAP.2015.props')" />
     <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10586.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10586.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.12.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.12.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.14.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.14.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props')" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UAP.2015, Version=3.9.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UAP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UAP.2015, Version=3.9.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UAP.2015.props')" />
     <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10586.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10586.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.12.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.12.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.14.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.14.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props')" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UAP.2015, Version=3.9.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UAP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UAP.2015, Version=3.9.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UAP.2015.props')" />
     <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10586.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10586.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.12.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.12.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.14.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`SQLite.UWP.2015, Version=3.14.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\SQLite.UWP.2015.props')" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>Tidal_StoreKey.pfx</PackageCertificateKeyFile>
-    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
     <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
-    <PackageCertificateThumbprint>764406BCCD326B5E3511CF0D4B5B442184968CBA</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>7EFED768FEBBD18E8AB632349BAB95250F731CC3</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)BuildOutput\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
@@ -159,7 +171,7 @@
     <ClCompile>
       <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_NO_ASYNCRTIMP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -176,7 +188,7 @@
     <ClCompile>
       <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_NO_ASYNCRTIMP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -193,7 +205,7 @@
     <ClCompile>
       <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_NO_ASYNCRTIMP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -217,6 +229,10 @@
     </ClInclude>
     <ClInclude Include="AudioService.h" />
     <ClInclude Include="AuthenticationVisualStateTrigger.h" />
+    <ClInclude Include="Background\BackgroundDownloader.h" />
+    <ClInclude Include="Background\CachedStreamProvider.h" />
+    <ClInclude Include="Background\MusicPlayer.h" />
+    <ClInclude Include="Background\WebStream.h" />
     <ClInclude Include="CurrentPlaylistPage.xaml.h">
       <DependentUpon>CurrentPlaylistPage.xaml</DependentUpon>
     </ClInclude>
@@ -228,6 +244,7 @@
     </ClInclude>
     <ClInclude Include="GroupedAlbums.h" />
     <ClInclude Include="IGo.h" />
+    <ClInclude Include="IPageWithPreservedState.h" />
     <ClInclude Include="LoadingView.h" />
     <ClInclude Include="LocalMusic.xaml.h">
       <DependentUpon>LocalMusic.xaml</DependentUpon>
@@ -237,6 +254,7 @@
       <DependentUpon>MiniPlayerView.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="PauseCommand.h" />
+    <ClInclude Include="Background\PlaybackReportStateMachine.h" />
     <ClInclude Include="PlayCommand.h" />
     <ClInclude Include="PlayerSeekBar.xaml.h">
       <DependentUpon>PlayerSeekBar.xaml</DependentUpon>
@@ -321,6 +339,61 @@
     </ClInclude>
     <ClInclude Include="WrapPanel.h" />
     <ClInclude Include="XamlHelpers.h" />
+    <ClInclude Include="XboxUI\FocusHelper.h" />
+    <ClInclude Include="XboxUI\XboxAlbumPage.xaml.h">
+      <DependentUpon>XboxUI\XboxAlbumPage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="XboxUI\XboxArticleListPageParameter.h" />
+    <ClInclude Include="XboxOneHub.h" />
+    <ClInclude Include="XboxUI\XboxArticleListPage.xaml.h">
+      <DependentUpon>XboxUI\XboxArticleListPage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="XboxUI\XboxArtistPage.xaml.h">
+      <DependentUpon>XboxUI\XboxArtistPage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="XboxUI\XboxBackground.h" />
+    <ClInclude Include="XboxUI\XboxDownloadsPage.xaml.h">
+      <DependentUpon>XboxUI\XboxDownloadsPage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="XboxUI\XboxGenresPage.xaml.h">
+      <DependentUpon>XboxUI\XboxGenresPage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="XboxUI\XboxHomeCatalogWidget.xaml.h">
+      <DependentUpon>XboxUI\XboxHomeCatalogWidget.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="XboxUI\XboxHomeCurrentPlaylistWidget.xaml.h">
+      <DependentUpon>XboxUI\XboxHomeCurrentPlaylistWidget.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="XboxUI\XboxHomeMyMusicWidget.xaml.h">
+      <DependentUpon>XboxUI\XboxHomeMyMusicWidget.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="XboxUI\XboxHomePage.xaml.h">
+      <DependentUpon>XboxUI\XboxHomePage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="XboxUI\XboxMoodsPage.xaml.h">
+      <DependentUpon>XboxUI\XboxMoodsPage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="XboxUI\XboxOnePlaylistsPage.xaml.h">
+      <DependentUpon>XboxUI\XboxOnePlaylistsPage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="XboxUI\XboxPlaylistPage.xaml.h">
+      <DependentUpon>XboxUI\XboxPlaylistPage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="XboxUI\XboxSearchPage.xaml.h">
+      <DependentUpon>XboxUI\XboxSearchPage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="XboxUI\XboxSearchResults.xaml.h">
+      <DependentUpon>XboxUI\XboxSearchResults.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="XboxUI\XboxSettingsPage.xaml.h">
+      <DependentUpon>XboxUI\XboxSettingsPage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="XboxUI\XboxShell.xaml.h">
+      <DependentUpon>XboxUI\XboxShell.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="XboxUI\XboxVideosPage.xaml.h">
+      <DependentUpon>XboxUI\XboxVideosPage.xaml</DependentUpon>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -408,6 +481,57 @@
     <Page Include="Videos.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="XboxUI\XboxAlbumPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XboxUI\XboxArticleListPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XboxUI\XboxArtistPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XboxUI\XboxDownloadsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XboxUI\XboxGenresPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XboxUI\XboxHomeCatalogWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XboxUI\XboxHomeCurrentPlaylistWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XboxUI\XboxHomeMyMusicWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XboxUI\XboxHomePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XboxUI\XboxMoodsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XboxUI\XboxOnePlaylistsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XboxUI\XboxPlaylistPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XboxUI\XboxSearchPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XboxUI\XboxSearchResults.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XboxUI\XboxSettingsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XboxUI\XboxShell.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="XboxUI\XboxVideosPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -470,6 +594,7 @@
     <Image Include="Assets\Wide310x150Logo.scale-400.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
+    <Image Include="londone-eye-panoramic.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AccountPage.xaml.cpp">
@@ -490,6 +615,10 @@
     </ClCompile>
     <ClCompile Include="AudioService.cpp" />
     <ClCompile Include="AuthenticationVisualStateTrigger.cpp" />
+    <ClCompile Include="Background\BackgroundDownloader.cpp" />
+    <ClCompile Include="Background\CachedStreamProvider.cpp" />
+    <ClCompile Include="Background\MusicPlayer.cpp" />
+    <ClCompile Include="Background\WebStream.cpp" />
     <ClCompile Include="CurrentPlaylistPage.xaml.cpp">
       <DependentUpon>CurrentPlaylistPage.xaml</DependentUpon>
     </ClCompile>
@@ -499,6 +628,7 @@
     <ClCompile Include="GenrePage.xaml.cpp">
       <DependentUpon>GenrePage.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="IPageWithPreservedState.cpp" />
     <ClCompile Include="LoadingView.cpp" />
     <ClCompile Include="LocalMusic.xaml.cpp">
       <DependentUpon>LocalMusic.xaml</DependentUpon>
@@ -508,6 +638,7 @@
       <DependentUpon>MiniPlayerView.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="PauseCommand.cpp" />
+    <ClCompile Include="Background\PlaybackReportStateMachine.cpp" />
     <ClCompile Include="PlayCommand.cpp" />
     <ClCompile Include="PlayerSeekBar.xaml.cpp">
       <DependentUpon>PlayerSeekBar.xaml</DependentUpon>
@@ -595,9 +726,63 @@
       <DependentUpon>Videos.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="WrapPanel.cpp" />
+    <ClCompile Include="XboxUI\XboxAlbumPage.xaml.cpp">
+      <DependentUpon>XboxUI\XboxAlbumPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="XboxUI\XboxArticleListPageParameter.cpp" />
+    <ClCompile Include="XboxOneHub.cpp" />
+    <ClCompile Include="XboxUI\XboxArticleListPage.xaml.cpp">
+      <DependentUpon>XboxUI\XboxArticleListPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="XboxUI\XboxArtistPage.xaml.cpp">
+      <DependentUpon>XboxUI\XboxArtistPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="XboxUI\XboxBackground.cpp" />
+    <ClCompile Include="XboxUI\XboxDownloadsPage.xaml.cpp">
+      <DependentUpon>XboxUI\XboxDownloadsPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="XboxUI\XboxGenresPage.xaml.cpp">
+      <DependentUpon>XboxUI\XboxGenresPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="XboxUI\XboxHomeCatalogWidget.xaml.cpp">
+      <DependentUpon>XboxUI\XboxHomeCatalogWidget.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="XboxUI\XboxHomeCurrentPlaylistWidget.xaml.cpp">
+      <DependentUpon>XboxUI\XboxHomeCurrentPlaylistWidget.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="XboxUI\XboxHomeMyMusicWidget.xaml.cpp">
+      <DependentUpon>XboxUI\XboxHomeMyMusicWidget.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="XboxUI\XboxHomePage.xaml.cpp">
+      <DependentUpon>XboxUI\XboxHomePage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="XboxUI\XboxMoodsPage.xaml.cpp">
+      <DependentUpon>XboxUI\XboxMoodsPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="XboxUI\XboxOnePlaylistsPage.xaml.cpp">
+      <DependentUpon>XboxUI\XboxOnePlaylistsPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="XboxUI\XboxPlaylistPage.xaml.cpp">
+      <DependentUpon>XboxUI\XboxPlaylistPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="XboxUI\XboxSearchPage.xaml.cpp">
+      <DependentUpon>XboxUI\XboxSearchPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="XboxUI\XboxSearchResults.xaml.cpp">
+      <DependentUpon>XboxUI\XboxSearchResults.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="XboxUI\XboxSettingsPage.xaml.cpp">
+      <DependentUpon>XboxUI\XboxSettingsPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="XboxUI\XboxShell.xaml.cpp">
+      <DependentUpon>XboxUI\XboxShell.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="XboxUI\XboxVideosPage.xaml.cpp">
+      <DependentUpon>XboxUI\XboxVideosPage.xaml</DependentUpon>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="SQLite.UAP.2015, Version=3.9.1" />
+    <SDKReference Include="SQLite.UWP.2015, Version=3.14.0" />
     <SDKReference Include="WindowsMobile, Version=10.0.10586.0" />
   </ItemGroup>
   <ItemGroup>
@@ -606,9 +791,6 @@
     </ProjectReference>
     <ProjectReference Include="..\..\dependancies\UWP-LocalDB-CPP\Build\LocalDB\LocalDB.vcxproj">
       <Project>{47b2b80f-6b2f-42e1-802e-8fd509c3bdcd}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\BackgroundAudio\BackgroundAudio.vcxproj">
-      <Project>{1404bfb3-f806-4ea7-a8b6-e994295ba93d}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Common\Common.vcxproj">
       <Project>{0b3b05b6-8216-491a-b3e7-e03bc38230f7}</Project>
@@ -625,12 +807,12 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\Win2D.uwp.1.9.0\build\native\Win2D.uwp.targets" Condition="Exists('..\packages\Win2D.uwp.1.9.0\build\native\Win2D.uwp.targets')" />
+    <Import Project="..\packages\Win2D.uwp.1.19.0\build\native\Win2D.uwp.targets" Condition="Exists('..\packages\Win2D.uwp.1.19.0\build\native\Win2D.uwp.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Win2D.uwp.1.9.0\build\native\Win2D.uwp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Win2D.uwp.1.9.0\build\native\Win2D.uwp.targets'))" />
+    <Error Condition="!Exists('..\packages\Win2D.uwp.1.19.0\build\native\Win2D.uwp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Win2D.uwp.1.19.0\build\native\Win2D.uwp.targets'))" />
   </Target>
 </Project>

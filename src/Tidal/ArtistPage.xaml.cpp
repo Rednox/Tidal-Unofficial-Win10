@@ -102,8 +102,22 @@ void parseBio(TextBlock^ txtBlock, std::wstring bioText) {
 
 }
 
-concurrency::task<void> Tidal::ArtistPage::LoadAsync(Windows::UI::Xaml::Navigation::NavigationEventArgs ^ args)
+ref class ArtistPageState sealed {
+public:
+	property int SelectedPivotIndex;
+	ArtistPageState(int selectedPivotIndex) {
+		SelectedPivotIndex = selectedPivotIndex;
+	}
+};
+
+Platform::Object ^ Tidal::ArtistPage::GetStateToPreserve()
 {
+	return ref new ArtistPageState(pivot->SelectedIndex);
+}
+
+concurrency::task<void> Tidal::ArtistPage::LoadAsync(Windows::UI::Xaml::Navigation::NavigationEventArgs^ args)
+{
+	auto preservedState = GetCurrentPagePreservedState<ArtistPageState>();
 	auto cancelToken = _cts.get_token();
 	try {
 		loadingView->LoadingState = Tidal::LoadingState::Loading;
@@ -115,7 +129,7 @@ concurrency::task<void> Tidal::ArtistPage::LoadAsync(Windows::UI::Xaml::Navigati
 		else {
 			removeFavoriteButton->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 		}
-		auto info = await artists::getArtistInfoAsync(id, cancelToken);
+		auto info = co_await artists::getArtistInfoAsync(id, cancelToken);
 		videosGV->ItemsSource = getArtistVideosDataSource(id);
 		similarArtistsGV->ItemsSource = getSimilarArtistsDataSource(id);
 		auto popularTracksTask = tools::async::swallowCancellationException( artists::getArtistPopularTracksAsync(id, 10, cancelToken));
@@ -129,7 +143,7 @@ concurrency::task<void> Tidal::ArtistPage::LoadAsync(Windows::UI::Xaml::Navigati
 		pageHeader->Text = tools::strings::toWindowsString(info->name);
 		headerArtistName->Text = tools::strings::toWindowsString(info->name);
 		headerImageRound->ImageSource = ref new Windows::UI::Xaml::Media::Imaging::BitmapImage(ref new Uri(api::resolveImageUri(info->picture, 160, 160)));
-		auto tracks = await popularTracksTask;
+		auto tracks = co_await popularTracksTask;
 		if (tracks.cancelled) {
 			concurrency::cancel_current_task();
 		}
@@ -148,7 +162,7 @@ concurrency::task<void> Tidal::ArtistPage::LoadAsync(Windows::UI::Xaml::Navigati
 			auto albums = ref new GroupedAlbums();
 			albums->Title = L"ALBUMS";
 			albums->Albums = ref new Platform::Collections::Vector<AlbumResumeItemVM^>();
-			auto albumsSource = await albumsTask;
+			auto albumsSource = co_await albumsTask;
 			if (albumsSource.cancelled) {
 				concurrency::cancel_current_task();
 			}
@@ -162,7 +176,7 @@ concurrency::task<void> Tidal::ArtistPage::LoadAsync(Windows::UI::Xaml::Navigati
 			auto albums = ref new GroupedAlbums();
 			albums->Title = L"SINGLES";
 			albums->Albums = ref new Platform::Collections::Vector<AlbumResumeItemVM^>();
-			auto albumsSource = await singlesTask;
+			auto albumsSource = co_await singlesTask;
 			if (albumsSource.cancelled) {
 				concurrency::cancel_current_task();
 			}
@@ -175,7 +189,7 @@ concurrency::task<void> Tidal::ArtistPage::LoadAsync(Windows::UI::Xaml::Navigati
 			auto albums = ref new GroupedAlbums();
 			albums->Title = L"COMPILATIONS";
 			albums->Albums = ref new Platform::Collections::Vector<AlbumResumeItemVM^>();
-			auto albumsSource = await compilationsTask;
+			auto albumsSource = co_await compilationsTask;
 			if (albumsSource.cancelled) {
 				concurrency::cancel_current_task();
 			}
@@ -191,7 +205,7 @@ concurrency::task<void> Tidal::ArtistPage::LoadAsync(Windows::UI::Xaml::Navigati
 		viewSource->ItemsPath = ref new PropertyPath(L"Albums");
 		discoGridView->ItemsSource = viewSource->View;
 		try {
-			auto bio = await bioTask;
+			auto bio = co_await bioTask;
 			if (bio.cancelled) {
 				concurrency::cancel_current_task();
 			}
@@ -209,7 +223,9 @@ concurrency::task<void> Tidal::ArtistPage::LoadAsync(Windows::UI::Xaml::Navigati
 				throw;
 			}
 		}
-
+		if (preservedState) {
+			pivot->SelectedIndex = preservedState->SelectedPivotIndex;
+		}
 		loadingView->LoadingState = Tidal::LoadingState::Loaded;
 	}
 	catch (...) {
@@ -220,13 +236,13 @@ concurrency::task<void> Tidal::ArtistPage::LoadAsync(Windows::UI::Xaml::Navigati
 
 
 
-concurrency::task<void> Tidal::ArtistPage::loadImageAsync(Platform::String ^ url)
+concurrency::task<void> Tidal::ArtistPage::loadImageAsync(Platform::String^ url)
 {
 	headerImage->CustomDevice = Microsoft::Graphics::Canvas::CanvasDevice::GetSharedDevice();
-	auto bmp = await Microsoft::Graphics::Canvas::CanvasBitmap::LoadAsync(Microsoft::Graphics::Canvas::CanvasDevice::GetSharedDevice(), ref new Uri(url));
+	auto bmp = co_await Microsoft::Graphics::Canvas::CanvasBitmap::LoadAsync(Microsoft::Graphics::Canvas::CanvasDevice::GetSharedDevice(), ref new Uri(url));
 
 	_albumBmp = bmp;
-	await Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([this]() {
+	co_await Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([this]() {
 		headerImage->Opacity = 0;
 		headerImage->Invalidate();
 		AnimateTo(headerImage, L"Opacity", 1.0, tools::time::ToWindowsTimeSpan(std::chrono::milliseconds(150)));
@@ -338,7 +354,7 @@ void Tidal::ArtistPage::OnRemoveFavoriteClick(Platform::Object^ sender, Windows:
 }
 
 concurrency::task<void> PlayRadio(std::int64_t artistId) {
-	auto tracks = await tools::async::swallowCancellationException(artists::getArtistRadioTracksAsync(artistId, 100, concurrency::cancellation_token::none()));
+	auto tracks = co_await tools::async::swallowCancellationException(artists::getArtistRadioTracksAsync(artistId, 100, concurrency::cancellation_token::none()));
 	auto trackSource = ref new Platform::Collections::Vector<TrackItemVM^>();
 	if (tracks.cancelled) {
 		return;
@@ -365,3 +381,4 @@ void Tidal::ArtistPage::OnRadioClick(Platform::Object^ sender, Windows::UI::Xaml
 {
 	PlayRadio(this->_artistId);
 }
+

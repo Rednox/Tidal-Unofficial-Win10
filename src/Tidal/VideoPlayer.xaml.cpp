@@ -8,7 +8,9 @@
 #include "AuthenticationService.h"
 #include "Api/GetVideoUrlQuery.h"
 #include "tools/StringUtils.h"
-
+#include "AudioService.h"
+#include <Environment.h>
+#include "XboxUI\FocusHelper.h"
 using namespace Tidal;
 
 using namespace Platform;
@@ -24,7 +26,7 @@ using namespace Windows::UI::Xaml::Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-concurrency::task<void> Tidal::VideoPlayer::launchVideo(Platform::String ^ id)
+concurrency::task<void> Tidal::VideoPlayer::launchVideo(Platform::String^ id)
 {
 	try {
 		auto& authSvc = getAuthenticationService();
@@ -34,8 +36,9 @@ concurrency::task<void> Tidal::VideoPlayer::launchVideo(Platform::String ^ id)
 		}
 		else {
 			api::GetVideoUrlQuery query(authSvc.authenticationState().sessionId(), authSvc.authenticationState().countryCode(), id);
-			auto urlInfo = await query.executeAsync(concurrency::cancellation_token::none());
+			auto urlInfo = co_await query.executeAsync(concurrency::cancellation_token::none());
 			me->Source = ref new Uri(tools::strings::toWindowsString(urlInfo->url));
+			co_await getAudioService().pauseAsync();
 		}
 	}
 	catch (...) {}
@@ -50,6 +53,9 @@ void Tidal::VideoPlayer::OnNavigatedTo(Windows::UI::Xaml::Navigation::Navigation
 VideoPlayer::VideoPlayer()
 {
 	InitializeComponent();
+	if (env::isRunningOnXbox()) {
+		Margin = Thickness(48, 0, 48, 27);
+	}
 }
 
 
@@ -57,4 +63,9 @@ void Tidal::VideoPlayer::OnMediaFailed(Platform::Object^ sender, Windows::UI::Xa
 {
 	auto message = e->ErrorMessage;
 	
+}
+
+
+void Tidal::VideoPlayer::OnLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
 }

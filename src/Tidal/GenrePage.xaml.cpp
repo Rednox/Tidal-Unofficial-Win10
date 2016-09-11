@@ -24,7 +24,7 @@ using namespace Windows::UI::Xaml::Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-concurrency::task<void> Tidal::GenrePage::LoadAsync(Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e)
+concurrency::task<void> Tidal::GenrePage::LoadAsync(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e)
 {
 	auto p = dynamic_cast<String^>(e->Parameter);
 	auto decoder = ref new WwwFormUrlDecoder(p);
@@ -63,7 +63,7 @@ concurrency::task<void> Tidal::GenrePage::LoadAsync(Windows::UI::Xaml::Navigatio
 	}
 
 	if (decoder->GetFirstValueByName(L"hasTracks") == L"true") {
-		auto tracks = await getNewsTrackItemsAsync(concurrency::cancellation_token::none(), L"genres", path);
+		auto tracks = co_await getNewsTrackItemsAsync(concurrency::cancellation_token::none(), L"genres", path);
 		tracksLV->ItemsSource = tracks;
 		_playbackStateManager = std::make_shared<TracksPlaybackStateManager>();
 		_playbackStateManager->initialize(tracks, Dispatcher);
@@ -75,10 +75,26 @@ concurrency::task<void> Tidal::GenrePage::LoadAsync(Windows::UI::Xaml::Navigatio
 		}
 	}
 }
-
+ref class GenrePagePreservedState sealed {
+public:
+	property int SelectedPivotItemIndex;
+};
 void Tidal::GenrePage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e)
 {
 	LoadAsync(e);
+	if (e->NavigationMode == NavigationMode::Back) {
+		auto state = GetCurrentPagePreservedState<GenrePagePreservedState>();
+		if (state) {
+			pivot->SelectedIndex = state->SelectedPivotItemIndex;
+		}
+	}
+}
+
+Platform::Object ^ Tidal::GenrePage::GetStateToPreserve()
+{
+	auto state = ref new GenrePagePreservedState();
+	state->SelectedPivotItemIndex = pivot->SelectedIndex;
+	return state;
 }
 
 GenrePage::GenrePage()

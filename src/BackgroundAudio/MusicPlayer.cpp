@@ -63,8 +63,8 @@ void SetMusicStateChanging() {
 }
 
 concurrency::task<String^> loadPlaylistJsonAsync() {
-	auto file = await concurrency::create_task(Windows::Storage::ApplicationData::Current->LocalFolder->CreateFileAsync(L"current_playlist.json", Windows::Storage::CreationCollisionOption::OpenIfExists));
-	auto json = await concurrency::create_task(Windows::Storage::FileIO::ReadTextAsync(file));
+	auto file = co_await concurrency::create_task(Windows::Storage::ApplicationData::Current->LocalFolder->CreateFileAsync(L"current_playlist.json", Windows::Storage::CreationCollisionOption::OpenIfExists));
+	auto json = co_await concurrency::create_task(Windows::Storage::FileIO::ReadTextAsync(file));
 	return json;
 }
 concurrency::task<String^> loadAllMusicPlaylistJsonAsync() {
@@ -72,7 +72,7 @@ concurrency::task<String^> loadAllMusicPlaylistJsonAsync() {
 	int skip = 0;
 	std::vector<std::wstring> toRandomize;
 	while (true) {
-		auto batch = await localdata::getImportedTracksAsync(skip, 30, concurrency::cancellation_token::none());
+		auto batch = co_await localdata::getImportedTracksAsync(skip, 30, concurrency::cancellation_token::none());
 		if (batch->size() == 0) {
 			break;
 		}
@@ -98,8 +98,8 @@ concurrency::task<String^> loadAllMusicPlaylistJsonAsync() {
 	}
 	result.push_back(L']');
 	auto json = tools::strings::toWindowsString(result);
-	auto file = await concurrency::create_task(Windows::Storage::ApplicationData::Current->LocalFolder->CreateFileAsync(L"current_playlist.json", Windows::Storage::CreationCollisionOption::OpenIfExists));
-	await concurrency::create_task(Windows::Storage::FileIO::WriteTextAsync(file, json));
+	auto file = co_await concurrency::create_task(Windows::Storage::ApplicationData::Current->LocalFolder->CreateFileAsync(L"current_playlist.json", Windows::Storage::CreationCollisionOption::OpenIfExists));
+	co_await concurrency::create_task(Windows::Storage::FileIO::WriteTextAsync(file, json));
 	return json;
 }
 
@@ -170,6 +170,52 @@ void showTrackDisplayInfo(const api::TrackInfo& trackInfo, bool canGoNext, bool 
 	smtc->DisplayUpdater->Thumbnail = Windows::Storage::Streams::RandomAccessStreamReference::CreateFromUri(coverUri);
 	smtc->DisplayUpdater->AppMediaId = trackInfo.id.ToString();
 	smtc->DisplayUpdater->Update();
+	/*
+	<tile>
+    <visual>
+      <binding template="TileSquarePeekImageAndText01">
+        <image id="1" src="image1" alt="alt text"/>
+        <text id="1">Text Header 1</text>
+        <text id="2">Text 2</text>
+        <text id="3">Text 3</text>
+        <text id="4">Text 4</text>
+      </binding>  
+    </visual>
+  </tile>
+
+*/
+
+	auto doc = ref new Windows::Data::Xml::Dom::XmlDocument();
+	auto xmlText = doc->CreateTextNode(L"");
+	xmlText->Data = coverUri->RawUri;
+	auto uriText = xmlText->GetXml();
+	xmlText->Data = tools::strings::toWindowsString(trackInfo.title);
+	auto titleText = xmlText->GetXml();
+	xmlText->Data = tools::strings::toWindowsString(trackInfo.artists[0].name);
+	auto artistText = xmlText->GetXml();
+	xmlText->Data = tools::strings::toWindowsString(trackInfo.album.title);
+	auto albumText = xmlText->GetXml();
+	std::wstring tileContent = L"<tile><visual><binding template=\"TileSquarePeekImageAndText01\">\
+        <image id=\"1\" src=\"" + std::wstring(uriText->Data()) + L"\" alt=\"alt text\"/>\
+        <text id=\"1\">"+std::wstring(titleText->Data())+L"</text>\
+        <text id=\"2\">" + std::wstring(artistText->Data()) + L"</text>\
+        <text id=\"3\">" + std::wstring(albumText->Data()) + L"</text>\
+        <text id=\"4\">Tidal unofficial</text>\
+      </binding>\
+<binding template=\"TileWide310x150PeekImage02\">\
+        <image id=\"1\" src=\"" + std::wstring(uriText->Data()) + L"\" alt=\"alt text\"/>\
+        <text id=\"1\">" + std::wstring(titleText->Data()) + L"</text>\
+        <text id=\"2\">" + std::wstring(artistText->Data()) + L"</text>\
+        <text id=\"3\">" + std::wstring(albumText->Data()) + L"</text>\
+        <text id=\"4\">Tidal unofficial</text>\
+      </binding>\
+    </visual>\
+  </tile>";
+
+	auto tileUpdater = Windows::UI::Notifications::TileUpdateManager::CreateTileUpdaterForApplication(L"App");
+	doc->LoadXml(tools::strings::toWindowsString(tileContent));
+	tileUpdater->Clear();
+	tileUpdater->Update(ref new Windows::UI::Notifications::TileNotification(doc));
 
 	auto settingsValues = Windows::Storage::ApplicationData::Current->LocalSettings->Values;
 	settingsValues->Insert(L"CurrentPlaybackTrackId", trackInfo.id);

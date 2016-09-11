@@ -10,6 +10,7 @@
 #include <tools/AsyncHelpers.h>
 void BackgroundAudio::BackgroundAudioTask::AttachToEvents()
 {
+
 	Windows::Media::Playback::BackgroundMediaPlayer::MessageReceivedFromForeground += ref new Windows::Foundation::EventHandler<Windows::Media::Playback::MediaPlayerDataReceivedEventArgs ^>(this, &BackgroundAudio::BackgroundAudioTask::OnMessageReceivedFromForeground);
 	auto transportControls = Windows::Media::Playback::BackgroundMediaPlayer::Current->SystemMediaTransportControls;
 	transportControls->ButtonPressed += ref new Windows::Foundation::TypedEventHandler<Windows::Media::SystemMediaTransportControls ^, Windows::Media::SystemMediaTransportControlsButtonPressedEventArgs ^>(this, &BackgroundAudio::BackgroundAudioTask::OnMediaTransportButtonPressed);
@@ -44,6 +45,8 @@ void BackgroundAudio::BackgroundAudioTask::Run(Windows::ApplicationModel::Backgr
 
 void BackgroundAudio::BackgroundAudioTask::OnCanceled(Windows::ApplicationModel::Background::IBackgroundTaskInstance ^sender, Windows::ApplicationModel::Background::BackgroundTaskCancellationReason reason)
 {
+	auto tileUpdater = Windows::UI::Notifications::TileUpdateManager::CreateTileUpdaterForApplication(L"App");
+	tileUpdater->Clear();
 	auto r = reason;
 	auto deferral = _taskDeferral.Get();
 	if (deferral) {

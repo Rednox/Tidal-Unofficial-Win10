@@ -5,6 +5,7 @@
     xmlns:local="using:Tidal"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Unloaded="OnUnloaded"
     RequestedTheme="Dark"
     mc:Ignorable="d">
     <UserControl.Resources>
@@ -88,7 +89,7 @@
                 <ScrollViewer VerticalScrollMode="Auto" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
                     <StackPanel>
                         <Rectangle Height="1" Fill="Black"/>
-                        <local:LoginView />
+                        <local:LoginView Height="80"/>
                         <ListView x:Name="menuEntriesLV" ItemContainerStyle="{StaticResource ListViewItemStyle1}"
                                   SelectionMode="Single"
                                   SelectionChanged="OnSelectedMenuItemChanged">
@@ -177,7 +178,9 @@
                     </StackPanel>
                 </ScrollViewer>
             </SplitView.Pane>
-            <Frame x:Name="navFrame" Navigated="OnNavigated" />
+            <Frame x:Name="navFrame" Navigated="OnNavigated"
+                   
+                   />
 
             
         </SplitView>

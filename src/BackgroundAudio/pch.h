@@ -8,8 +8,9 @@
 #include <collection.h>
 #include <ppltasks.h>
 #include <ppl.h>
-#include <experimental\resumable>
-#include <pplawait.h>
+#include <experimental/coroutine>
+using namespace Platform;
+#include <pplawait2.h>
 
 #undef min
 #undef max

@@ -12,6 +12,7 @@
 #include <Api/CoverCache.h>
 #include "Shell.xaml.h"
 #include "CurrentPlaylistPage.xaml.h"
+#include <Environment.h>
 
 using namespace Tidal;
 
@@ -48,7 +49,15 @@ MiniPlayerView::MiniPlayerView()
 
 void Tidal::MiniPlayerView::UpdateAdaptiveState()
 {
-	if (ActualWidth >= 700) {
+	if (env::isRunningOnXbox()) { // if xbox
+		narrowTimelineStateTrigger->IsActive = false;
+		largeStateTrigger->IsActive = false;
+		largeTimelineStateTrigger->IsActive = false;
+		extraLargeStateTrigger->IsActive = false;
+		xboxStateTrigger->IsActive = !toggleView->IsChecked->Value;
+		xboxTimelineStateTrigger->IsActive = toggleView->IsChecked->Value;
+	}
+	else if (ActualWidth >= 700) {
 		narrowTimelineStateTrigger->IsActive = false;
 		largeStateTrigger->IsActive = false;
 		largeTimelineStateTrigger->IsActive = false;
@@ -75,7 +84,7 @@ void Tidal::MiniPlayerView::UpdateState()
 		Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([this]() {UpdateState(); }));
 		return;
 	}
-	auto player = Windows::Media::Playback::BackgroundMediaPlayer::Current;
+	auto player = getAudioService().player();
 	if (player->CurrentState == Windows::Media::Playback::MediaPlayerState::Playing || player->CurrentState == Windows::Media::Playback::MediaPlayerState::Opening || player->CurrentState == Windows::Media::Playback::MediaPlayerState::Buffering) {
 		togglePlay->IsChecked = true;
 		playPauseIcon->Glyph = L"b";
@@ -89,7 +98,7 @@ void Tidal::MiniPlayerView::UpdateState()
 void Tidal::MiniPlayerView::AttachToPlayerEvents()
 {
 	try {
-		auto player = Windows::Media::Playback::BackgroundMediaPlayer::Current;
+		auto player = getAudioService().player();
 		auto token = player->CurrentStateChanged += ref new Windows::Foundation::TypedEventHandler<Windows::Media::Playback::MediaPlayer ^, Platform::Object ^>(this, &Tidal::MiniPlayerView::OnMediaPlayerStateChanged);
 		_eventRegistrations.push_back(tools::makeScopedEventRegistration(token, [player](const Windows::Foundation::EventRegistrationToken& token) {
 			try {
@@ -100,7 +109,6 @@ void Tidal::MiniPlayerView::AttachToPlayerEvents()
 	}
 	catch (Platform::COMException^ comEx) {
 		if (comEx->HResult == 0x800706BA) {
-			getAudioService().onBackgroundAudioFailureDetected();
 			AttachToPlayerEvents();
 			return;
 		}
@@ -154,7 +162,7 @@ void Tidal::MiniPlayerView::OnAppResuming()
 concurrency::task<void> Tidal::MiniPlayerView::HandleTrackInfoAsync(const api::TrackInfo & infoRef)
 {
 	auto info = infoRef;
-	auto url = await api::EnsureCoverInCacheAsync(infoRef.album.id, tools::strings::toWindowsString( infoRef.album.cover), concurrency::cancellation_token::none());
+	auto url = co_await api::EnsureCoverInCacheAsync(infoRef.album.id, tools::strings::toWindowsString( infoRef.album.cover), concurrency::cancellation_token::none());
 	currentItemImage->Source = ref new Windows::UI::Xaml::Media::Imaging::BitmapImage(ref new Uri(url));
 	trackName->Text = tools::strings::toWindowsString(info.title);
 	artistName->Text = tools::strings::toWindowsString(info.artists[0].name);
@@ -184,7 +192,7 @@ void Tidal::MiniPlayerView::OnMediaPlayerStateChanged(Windows::Media::Playback::
 
 void Tidal::MiniPlayerView::OnPlayPauseClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	auto player = Windows::Media::Playback::BackgroundMediaPlayer::Current;
+	auto player = getAudioService().player();
 	if (player->CurrentState == Windows::Media::Playback::MediaPlayerState::Playing || player->CurrentState == Windows::Media::Playback::MediaPlayerState::Opening || player->CurrentState == Windows::Media::Playback::MediaPlayerState::Buffering) {
 		getAudioService().pauseAsync();
 	}

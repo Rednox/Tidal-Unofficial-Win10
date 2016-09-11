@@ -7,11 +7,15 @@
 
 #include <collection.h>
 #include <ppltasks.h>
-#include <experimental\resumable>
-#include <pplawait.h>
+#include <experimental/coroutine>
+#include <pplawait2.h>
 #include "App.xaml.h"
 #undef min
 #undef max
+#include "trackitemvm.h"
+#include "sublistfiltercontrol.xaml.h"
+#include "searchresulttemplateselector.h"
+
 
 //
 //namespace std

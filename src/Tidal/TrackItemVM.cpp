@@ -13,6 +13,10 @@
 #include "UnauthenticatedDialog.h"
 #include "AddToPlaylistDialog.xaml.h"
 #include "MenuFlyouts.h"
+#include "XboxUI/XboxShell.xaml.h"
+#include "AudioService.h"
+#include "XboxUI/XboxAlbumPage.xaml.h"
+#include "XboxUI/XboxArtistPage.xaml.h"
 using namespace api;
 Windows::UI::Xaml::Input::ICommand^ Tidal::TrackItemVM::PlayCommand::get() {
 	auto lst = _trackListRef.Resolve<Windows::Foundation::Collections::IIterable<TrackItemVM^>>();
@@ -23,11 +27,26 @@ Windows::UI::Xaml::Input::ICommand^ Tidal::TrackItemVM::PlayCommand::get() {
 		return ref new Tidal::PlayCommand(this);
 	}
 }
+void Tidal::TrackItemVM::TogglePlayPause()
+{
+	if (_playButtonVisibility == Windows::UI::Xaml::Visibility::Visible) {
+		PlayCommand->Execute(nullptr);
+	}
+	else {
+		getAudioService().pauseAsync();
+	}
+}
 void Tidal::TrackItemVM::GoToArtist()
 {
 	auto shell = dynamic_cast<Shell^>(Windows::UI::Xaml::Window::Current->Content);
 	if (shell) {
 		shell->Frame->Navigate(ArtistPage::typeid, _trackInfo.artist.id);
+	}
+	else {
+		auto xbshell = dynamic_cast<XboxShell^>(Windows::UI::Xaml::Window::Current->Content);
+		if (xbshell) {
+			xbshell->Frame->Navigate(XboxArtistPage::typeid, _trackInfo.artist.id);
+		}
 	}
 }
 void Tidal::TrackItemVM::GoToAlbum()
@@ -35,6 +54,12 @@ void Tidal::TrackItemVM::GoToAlbum()
 	auto shell = dynamic_cast<Shell^>(Windows::UI::Xaml::Window::Current->Content);
 	if (shell) {
 		shell->Frame->Navigate(AlbumPage::typeid, _trackInfo.album.id.ToString());
+	}
+	else {
+		auto xbshell = dynamic_cast<XboxShell^>(Windows::UI::Xaml::Window::Current->Content);
+		if (xbshell) {
+			xbshell->Frame->Navigate(XboxAlbumPage::typeid, _trackInfo.album.id.ToString());
+		}
 	}
 }
 void Tidal::TrackItemVM::AddFavorite()

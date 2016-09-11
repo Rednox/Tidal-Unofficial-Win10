@@ -12,6 +12,7 @@
 #include <tools/TimeUtils.h>
 #include <tools/AsyncHelpers.h>
 #include "XamlHelpers.h"
+#include "Shell.xaml.h"
 using namespace Tidal;
 
 using namespace Platform;
@@ -27,18 +28,42 @@ using namespace Windows::UI::Xaml::Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
+
+
 Playlists::Playlists()
 {
 	InitializeComponent();
 }
+ref class PlaylistsPageState sealed{
+public:
+	property int FeaturedPlaylistSelectedFilterIndex;
+	property int SelectedMoodIndex;
+
+};
+Platform::Object ^ Tidal::Playlists::GetStateToPreserve()
+{
+	auto state = ref new PlaylistsPageState();
+	state->FeaturedPlaylistSelectedFilterIndex = allPlaylistsFilter->SelectedIndex;
+	state->SelectedMoodIndex = moodsGV->SelectedIndex;
+	return state;
+}
+void Tidal::Playlists::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e)
+{
+	if (e->NavigationMode == NavigationMode::Back) {
+		LoadAsync(true);
+	}
+	else {
+		LoadAsync(false);
+	}
+}
 
 
-concurrency::task<void> Tidal::Playlists::LoadAsync()
+concurrency::task<void> Tidal::Playlists::LoadAsync(bool loadPreservedState)
 {
 	try {
-		auto moods = await getSublistsAsync(concurrency::cancellation_token::none(), L"moods");
-		auto featured = await getSublistsAsync(concurrency::cancellation_token::none());
-		//	auto moods = await moodsTask;
+		auto moods = co_await getSublistsAsync(concurrency::cancellation_token::none(), L"moods");
+		auto featured = co_await getSublistsAsync(concurrency::cancellation_token::none());
+		//	auto moods = co_await moodsTask;
 		auto moodsSource = ref new Platform::Collections::Vector<SublistItemVM^>();
 		for (auto&& info : *moods) {
 			moodsSource->Append(ref new SublistItemVM(info));
@@ -52,6 +77,17 @@ concurrency::task<void> Tidal::Playlists::LoadAsync()
 			}
 		}
 		allPlaylistsFilter->SublistSource = featuredSource;
+		if (loadPreservedState) {
+			auto state = dynamic_cast<PlaylistsPageState^>( dynamic_cast<Shell^>(Window::Current->Content)->CurrentPageState);
+			if (state) {
+				if (state->SelectedMoodIndex == -1 && state->FeaturedPlaylistSelectedFilterIndex != -1) {
+					allPlaylistsFilter->SelectedIndex = state->FeaturedPlaylistSelectedFilterIndex;
+				}
+				else if (state->SelectedMoodIndex != 1) {
+					moodsGV->SelectedIndex = state->SelectedMoodIndex;
+				}
+			}
+		}
 	}
 	catch (...) {
 
@@ -60,7 +96,7 @@ concurrency::task<void> Tidal::Playlists::LoadAsync()
 
 
 
-concurrency::task<void> Tidal::Playlists::LoadMoodAsync(SublistItemVM ^ item)
+concurrency::task<void> Tidal::Playlists::LoadMoodAsync(SublistItemVM^ item)
 {
 	try {
 		auto src = getNewsPlaylistsDataSource(L"moods", item->Path);
@@ -70,8 +106,8 @@ concurrency::task<void> Tidal::Playlists::LoadMoodAsync(SublistItemVM ^ item)
 		moodHeaderZone->Visibility = Windows::UI::Xaml::Visibility::Visible;
 		moodHeaderImage->Source = ref new Windows::UI::Xaml::Media::Imaging::BitmapImage(ref new Uri(item->HeadingUrl));
 		moodHeaderTxt->Text = item->Name;
-		await firstLoadTask;
-		await tools::async::WaitFor(tools::time::ToWindowsTimeSpan(std::chrono::milliseconds(100)), concurrency::cancellation_token::none());
+		co_await firstLoadTask;
+		co_await tools::async::WaitFor(tools::time::ToWindowsTimeSpan(std::chrono::milliseconds(100)), concurrency::cancellation_token::none());
 		auto sv = FindOwningScrollViewer(moodHeaderZone);
 		auto ttv = moodHeaderZone->TransformToVisual(sv);
 		auto offset = ttv->TransformPoint(Point(0, 0));
@@ -84,7 +120,6 @@ concurrency::task<void> Tidal::Playlists::LoadMoodAsync(SublistItemVM ^ item)
 
 void Tidal::Playlists::OnPageLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	LoadAsync();
 }
 
 

@@ -1,0 +1,35 @@
+﻿<Page
+    x:Class="Tidal.XboxHomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Tidal"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    SizeChanged="OnSizeChanged"
+    Loaded="OnLoaded"
+    NavigationCacheMode="Enabled"
+    mc:Ignorable="d">
+    
+    <Page.Resources>
+        <local:FactorConverter Factor="0.4" x:Key="parallaxFactor"/>
+        
+    </Page.Resources>
+
+    <Grid >
+        
+        <local:XboxOneHub x:Name="hub">
+
+            <local:XboxOneHubSection Header="CURRENT PLAYLIST" >
+                <local:XboxHomeCurrentPlaylistWidget />
+            </local:XboxOneHubSection>
+            <local:XboxOneHubSection Header="CATALOG">
+                <local:XboxHomeCatalogWidget />
+            </local:XboxOneHubSection>
+            <local:XboxOneHubSection Header="MY MUSIC" >
+                <local:XboxHomeMyMusicWidget />
+            </local:XboxOneHubSection>
+
+           
+        </local:XboxOneHub>
+    </Grid>
+</Page>
